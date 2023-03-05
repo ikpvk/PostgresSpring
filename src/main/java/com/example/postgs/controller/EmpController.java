@@ -3,6 +3,8 @@ package com.example.postgs.controller;
 import com.example.postgs.model.Emp;
 import com.example.postgs.repository.EmpRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +23,8 @@ public class EmpController {
     }
 
     @GetMapping("/getEmpByDeptId")
-    private List<Emp> getEmployeesByDeptId(@RequestParam UUID deptId) {
-        return empRepo.findRecordsByDeptId(deptId);
+    private List<Object[]> getEmployeesByDeptId(@RequestParam UUID deptId) {
+        Pageable p = PageRequest.of(0, 10);
+        return empRepo.findRecordsByDeptId(p,deptId);
     }
 }
